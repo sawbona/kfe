@@ -13,5 +13,5 @@ In order to start with this project you will only need Netbeans 8.1 and cafe-tem
 1. Once the build process has finished right click on cafe.web -> click on Run.
 
 If everything went well a new tab should appear in you web browser running your web application.
-If you experience any throuble visit the wiki page https://github.com/sawbona/kfe/wiki or ask me any question on my blog (sawbona.blogspot.com).
+If you experience any throuble visit the wiki page https://github.com/sawbona/kfe/wiki or ask me any question on my blog (http://sawbona.blogspot.com).
 
