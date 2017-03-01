@@ -6,7 +6,7 @@ Kfe is a very simple, but still, functional web project made with Java, Spring, 
 In order to start with this project you will only need Netbeans 8.1 and cafe-template source code.
 
 1. Download cafe-template Zip file to some location in your compute (let says ~/NetbeansProjects/).
-1. Within Netbeans compile cafe.parent and run cafe.web.
+1. Within Netbeans compile cafe.parent and run cafe.web projects.
 
 If everything went well a new tab should appear in you web browser running your web application.
 If you experience any throuble visit the wiki page https://github.com/sawbona/kfe/wiki or ask me any question on my blog (http://sawbona.blogspot.com).
