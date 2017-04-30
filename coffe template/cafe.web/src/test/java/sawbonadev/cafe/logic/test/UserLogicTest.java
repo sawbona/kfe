@@ -73,9 +73,7 @@ public class UserLogicTest {
         Assert.isTrue(!save.isValid(), "valid view?");
         System.out.println("size validations = " + save.getValidations().keySet().size());
         Assert.isTrue(save.getValidations().keySet().size() == 3, "elements");
-        UserDetails loadUserByUsername = authenticationProvider.loadUserByUsername("a@b.com");
-        Collection<? extends GrantedAuthority> authorities = loadUserByUsername.getAuthorities();
-        
+        authenticationProvider.loadUserByUsername("a@b.com");
     }
     
     

@@ -7,6 +7,9 @@
  * Example of Require.js boostrap javascript
  */
 var contextPath = contextPath || '/';
+
+console.log("contextPath = " + contextPath);
+
 requirejs.config({
 
     baseUrl: contextPath + '/res/jet/js/',
@@ -35,7 +38,7 @@ requirejs.config({
         'jquery': {
             exports: ['jQuery', '$']
         },
-        "bootstrapjs" : { "deps" :['jquery'] }
+        "bootstrapjs": {"deps": ['jquery']}
     },
 
     // This section configures the i18n plugin. It is merging the Oracle JET built-in translation
@@ -61,7 +64,7 @@ requirejs.config({
                 return true;
             }
         },
-        'app/facade/usersRestFacade':{
+        'app/facade/usersRestFacade': {
             path: contextPath || "/hola"
         }
     }
@@ -85,6 +88,17 @@ require(['ojs/ojcore',
     'ojs/ojbutton',
     'ojs/ojtoolbar',
     'ojs/ojmenu',
-    'bootstrapjs'], function (oj, ko, $) {
-    
+    'bootstrapjs',
+    'ojs/ojmodule', 'ojs/ojrouter'], function (oj, ko, $) {
+
+    console.log("inside require.mainApp.js");
+
+    oj.ModuleBinding.defaults.modelPath = '../../app/routing/viewModels/';
+    oj.ModuleBinding.defaults.viewPath = 'text!../../app/routing/views/';
+
+    $(function () {
+        ko.applyBindings({});
+    });
+
+
 });
