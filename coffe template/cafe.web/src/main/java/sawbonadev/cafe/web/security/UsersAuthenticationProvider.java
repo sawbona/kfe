@@ -26,7 +26,7 @@ public class UsersAuthenticationProvider implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {
         final User user = userDao.findByEmail(string);
-        return new BasicUserDetails(user);
+        return user == null ? null : new BasicUserDetails(user);
     }
     
 }

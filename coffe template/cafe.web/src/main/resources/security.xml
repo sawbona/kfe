@@ -14,8 +14,13 @@
     <http pattern="/res/**" security="none"/>
     
     <http auto-config="true">
+        <!--anyone can acces /account/login html in order to try to login-->
         <intercept-url pattern="/account/login" access="isAnonymous()" />
+        
+        <!--post to login is allowed-->
         <intercept-url pattern="/login*" access="isAnonymous()" />
+        
+        <!--Everything else you should be authenticated -->
         <intercept-url pattern="/**" access="isAuthenticated()" />
         <access-denied-handler error-page="/403" />
         <form-login 
