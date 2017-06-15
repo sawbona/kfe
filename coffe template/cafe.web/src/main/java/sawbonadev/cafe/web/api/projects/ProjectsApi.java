@@ -5,15 +5,15 @@
  */
 package sawbonadev.cafe.web.api.projects;
 
+import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sawbonadev.cafe.web.api.projects.model.ProjectDto;
+import sawbonadev.cafe.web.api.users.model.UserDto;
 import sawbonadev.cafe.web.logic.ProjectsLogic;
-import sawbonadev.cafe.web.security.BasicUserDetails;
 import sawbonadev.solo.GenericResponse;
 
 /**
@@ -27,9 +27,9 @@ public class ProjectsApi {
     @Autowired
     private ProjectsLogic projectsLogic;
     
-    public ResponseEntity getProjects(){
-        BasicUserDetails user = (BasicUserDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
-        GenericResponse<Page<ProjectDto>> projects = projectsLogic.getProjectsFrom(user);
+    @RequestMapping("/")
+    public ResponseEntity getProjects(Principal principal){
+        GenericResponse<Page<ProjectDto>> projects = projectsLogic.getProjectsFrom(new UserDto(principal.getName()));
         return ResponseEntity.ok(projects);
     }
     

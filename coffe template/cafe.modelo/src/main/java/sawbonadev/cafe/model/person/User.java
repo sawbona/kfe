@@ -7,7 +7,6 @@ package sawbonadev.cafe.model.person;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,11 +25,18 @@ import sawbonadev.cafe.model.users.Role;
  * @author sawbona
  */
 @Entity
-@Table(name = "users")
+@Table(name = "Users")
 public class User implements Serializable {
 
+    public User() {
+    }
+
+    public User(String email) {
+        this.email = email;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "userId")
     private long userId;
 
@@ -40,12 +46,6 @@ public class User implements Serializable {
     @Column(name = "password", length = 500, nullable = false)
     private String password;
 
-    /**
-     * A un usuario se le agrega la informacion de su persona. Cuando se
-     * registra se puede inicializar como null los campos de la persona pero se
-     * debe de crear. Cuando eliminar un usuario no eliminamos la informacion de
-     * la persona?
-     */
     @OneToOne(optional = true, cascade = CascadeType.ALL)
     private PersonDetail person;
 
@@ -92,4 +92,9 @@ public class User implements Serializable {
         this.person = persona;
     }
 
+    @Override
+    public String toString() {
+        return "User{" + "userId=" + userId + ", email=" + email + ", password=" + password + '}';
+    }
+    
 }

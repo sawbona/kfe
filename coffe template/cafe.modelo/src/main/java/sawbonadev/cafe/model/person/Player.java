@@ -5,8 +5,6 @@
  */
 package sawbonadev.cafe.model.person;
 
-import sawbonadev.cafe.model.person.PersonDetail;
-
 /**
  *
  * @author sawbona

@@ -28,7 +28,7 @@ import sawbonadev.cafe.web.views.CreateAccountView;
 public class UsersLogic {
 
     @Autowired
-    private UserDao usuariosDao;
+    private UserDao usersDao;
     
     private final UserDtoConverter userDtoConverter = new UserDtoConverter();
 
@@ -38,7 +38,7 @@ public class UsersLogic {
 
         // if email is present validate for email already registered.
         if (validations.isValid()) {
-            User finded = usuariosDao.findByEmail(vista.getEmail());
+            User finded = usersDao.findByEmail(vista.getEmail());
             if (finded != null) {
                 validations.addValidationMessageForProperty("duplicatedEmail",
                         "El email ya se encuentra registrado.");
@@ -74,22 +74,22 @@ public class UsersLogic {
             usuario.setEmail(vista.getEmail());
             usuario.setPassword(vista.getPassword());
             usuario.setPerson(new PersonDetail());
-            usuariosDao.save(usuario);
+            usersDao.save(usuario);
         }
         return validations;
     }
     
 
     public GenericResponse<Page<UserDto>> list(int p, int ps) {
-        Page<User> findAll = usuariosDao.findAll(new PageRequest(p, ps));
+        Page<User> findAll = usersDao.findAll(new PageRequest(p, ps));
         Page<UserDto> dtos = findAll.map(userDtoConverter);
         return new GenericResponse(dtos);
     }
 
     @Transactional
     public GenericResponse<UserDto> delete(String email) {
-        User findOne = usuariosDao.findByEmail(email);
-        usuariosDao.delete(findOne);
+        User findOne = usersDao.findByEmail(email);
+        usersDao.delete(findOne);
         return new GenericResponse<>(userDtoConverter.convert(findOne));
     }
 

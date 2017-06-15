@@ -13,6 +13,9 @@ public class UserDto {
     
     private String email;
 
+    public UserDto() {
+    }
+
     public UserDto(String email) {
         this.email = email;
     }

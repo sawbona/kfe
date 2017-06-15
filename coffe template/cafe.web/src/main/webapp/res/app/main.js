@@ -12,7 +12,7 @@ console.log("contextPath = " + contextPath);
 
 requirejs.config({
 
-    baseUrl: contextPath + '/res/jet/js/',
+    baseUrl: contextPath + '/res/libs/jet/js/',
     // Path mappings for the logical module names
     paths: {
         'knockout': 'libs/knockout/knockout-3.4.0',
@@ -29,9 +29,9 @@ requirejs.config({
         'css': 'libs/require-css/css.min',
         'customElements': 'libs/webcomponents/CustomElements.min',
         'proj4': 'libs/proj4js/dist/proj4',
-        'bootstrapjs': contextPath + '/res/bs/js/bootstrap',
-        'app': '../../app',
-        'mainApp': contextPath + "/res/mainApp"
+        'bootstrapjs': contextPath + '/res/libs/bs/js/bootstrap',
+        'app' : contextPath + '/res/app',
+        'kf': contextPath + '/res/libs/kf'
     },
     // Shim configurations for modules that do not expose AMD
     shim: {
@@ -65,7 +65,7 @@ requirejs.config({
             }
         },
         'app/facade/usersRestFacade': {
-            path: contextPath || "/hola"
+            path: contextPath
         }
     }
 });
@@ -83,22 +83,28 @@ requirejs.config({
 require(['ojs/ojcore',
     'knockout',
     'jquery',
-    'app/commons/kf',
     'ojs/ojknockout',
     'ojs/ojbutton',
     'ojs/ojtoolbar',
     'ojs/ojmenu',
     'bootstrapjs',
-    'ojs/ojmodule', 'ojs/ojrouter'], function (oj, ko, $) {
+    'ojs/ojmodule', 'ojs/ojrouter', 'kf'], function (oj, ko, $) {
 
-    console.log("inside require.mainApp.js");
+    console.log("inside require.main.js");
+    
+    // it is used by ojModule component
+    oj.ModuleBinding.defaults.modelPath = '../../../app/viewModels/';
+    oj.ModuleBinding.defaults.viewPath = 'text!../../../app/views/';
 
-    oj.ModuleBinding.defaults.modelPath = '../../app/routing/viewModels/';
-    oj.ModuleBinding.defaults.viewPath = 'text!../../app/routing/views/';
+    function Main(){
+        var self = this;
+        self.contextPath = contextPath;
+    }
 
+    var main = new Main();
     $(function () {
-        ko.applyBindings({});
+        ko.applyBindings(main, document.getElementById('main-container'));
     });
 
-
+    return main;
 });

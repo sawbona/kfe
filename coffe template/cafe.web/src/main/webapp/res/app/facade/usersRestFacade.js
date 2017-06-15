@@ -1,7 +1,6 @@
 define(["jquery",
     "module",
-    "app/commons/kf",
-    "promise"], function ($, module, kf) {
+    "promise"], function ($, module) {
 
     var path = module.config().path;
 

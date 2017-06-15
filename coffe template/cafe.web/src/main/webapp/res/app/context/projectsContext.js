@@ -4,14 +4,12 @@
  * and open the template in the editor.
  */
 define(['ojs/ojcore', 'knockout',
-    'jquery', 'ojs/ojknockout'], function (oj, ko, $) {
+    'jquery'], function (oj, ko, $){
     
-    console.log("insie projectDetails.js");
-    
-    function ProjectDetailsViewModel(){
+    function ProjectsContext(){
         var self = this;
-        self.activities = [{name: "todo"}];
-    }
+        self.project = ko.observable();
+    };
     
-    return new ProjectDetailsViewModel;
+    return new ProjectsContext();
 });
