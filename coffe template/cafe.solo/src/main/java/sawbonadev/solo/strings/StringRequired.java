@@ -5,18 +5,21 @@
  */
 package sawbonadev.solo.strings;
 
-import org.apache.commons.validator.EmailValidator;
 import sawbonadev.solo.Validator;
 
 /**
+ * Validates that all strings are not null and its trimed value is not empty.
+ * Invalid examples: " " ""
+ *
+ * Valid examples: " asd " "asd"
  *
  * @author clobaco
  */
-public class StringValidEmail implements Validator<String> {
+public class StringRequired implements Validator<String> {
 
     @Override
-    public boolean isValid(String email) {
-        return EmailValidator.getInstance().isValid(email);
+    public boolean isValid(String string) {
+        return !(string == null || string.trim().isEmpty());
     }
 
 }

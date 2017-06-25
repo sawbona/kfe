@@ -3,12 +3,14 @@ define(["jquery"], function ($) {
     function kf($) {
         var self = this;
         
+        self.log = function(message, object){
+            if(object === undefined){
+                object = message;
+                message = "log";
+            }
+            console.log(message + " = " + JSON.stringify(object));
+        };
         
-        /* 
-         * To change this license header, choose License Headers in Project Properties.
-         * To change this template file, choose Tools | Templates
-         * and open the template in the editor.
-         */
         self.processErrorMessages = function () {
             $(function () {
                 $(".kf-generic-validation-error").each(function () {

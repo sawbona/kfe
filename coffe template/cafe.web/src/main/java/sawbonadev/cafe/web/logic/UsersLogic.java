@@ -16,9 +16,8 @@ import sawbonadev.cafe.model.person.User;
 import sawbonadev.cafe.web.api.converters.UserDtoConverter;
 import sawbonadev.cafe.web.api.users.model.UserDto;
 import sawbonadev.solo.GenericResponse;
-import sawbonadev.solo.strings.StringsRequired;
-import sawbonadev.solo.strings.StringValidEmail;
 import sawbonadev.cafe.web.views.CreateAccountView;
+import sawbonadev.solo.strings.ValidationsUtils;
 
 /**
  *
@@ -32,24 +31,24 @@ public class UsersLogic {
     
     private final UserDtoConverter userDtoConverter = new UserDtoConverter();
 
-    public GenericResponse<CreateAccountView> validate(final CreateAccountView vista) {
-        GenericResponse<CreateAccountView> validations = new GenericResponse<>(vista);
-        validations.add("email", "El email es obligatorio.", new StringsRequired(vista.getEmail()));
+    public GenericResponse<CreateAccountView> validate(final CreateAccountView view) {
+        GenericResponse<CreateAccountView> validations = new GenericResponse<>(view);
+        validations.add("email", "Email is required.", ValidationsUtils.STRINGS_REQUIRED, view.getEmail());
 
         // if email is present validate for email already registered.
         if (validations.isValid()) {
-            User finded = usersDao.findByEmail(vista.getEmail());
+            User finded = usersDao.findByEmail(view.getEmail());
             if (finded != null) {
                 validations.addValidationMessageForProperty("duplicatedEmail",
-                        "El email ya se encuentra registrado.");
+                        "Email is alredy registered.");
             }
         }
-        validations.add("email", "Ingrese una dirección de correo válida.",
-                new StringValidEmail(vista.getEmail()));
-        validations.add("password", "La contraseña es obligatoria.",
-                new StringsRequired(vista.getPassword()));
-        validations.add("passwordConfirm", "La confirmacion de la contraseña es obligatoria.",
-                new StringsRequired(vista.getPasswordConfirm()));
+        validations.add("email", "Enter a valid email.",
+                ValidationsUtils.VALID_EMAIL, view.getEmail());
+        validations.add("password", "Password is required.",
+                ValidationsUtils.STRINGS_REQUIRED, view.getPassword());
+        validations.add("passwordConfirm", "Password confirmation is required.",
+                ValidationsUtils.VALID_EMAIL, view.getPasswordConfirm());
 
         // validate password and confirmation.
 //        if (new StringsRequired(vista.getPassword(), vista.getPasswordConfirm()).isValid()) {

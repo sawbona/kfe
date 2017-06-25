@@ -11,10 +11,23 @@ package sawbonadev.cafe.web.api.projects.model;
  */
 public class ProjectDto {
 
-    private String id;
+    private long id;
     
-    private String displayName;
-    
-    
-    
+    private String name;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

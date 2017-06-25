@@ -28,7 +28,7 @@ public class Project implements Serializable {
     @Column(name = "projectId")
     private long projectId;
 
-    @Column(name = "email", length = 100, nullable = false, unique = true)
+    @Column(name = "name", length = 100, nullable = false)
     private String name;
 
     @ManyToOne(optional = false)

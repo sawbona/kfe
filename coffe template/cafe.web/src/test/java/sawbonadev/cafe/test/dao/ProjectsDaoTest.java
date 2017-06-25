@@ -45,21 +45,26 @@ public class ProjectsDaoTest {
         final String email = "a@b.com";
         final User owner = new User(email);
         owner.setPassword("xxx");
-//        User save = userDao.save(owner);
+        User save = userDao.save(owner);
 
-        // required owner
-        final Project project = new Project();
-        project.setOwner(owner);
-
-        // project.setna
-        project.setName("Kafé");
-
-        projectsDao.save(project);
+        saveNewProject(save, "Kafé");
+        saveNewProject(save, "Kafé2");
 
         Iterable<Project> findAll = projectsDao.findAll();
         for (Project projectTmp : findAll) {
             System.out.println("project = " + projectTmp);
         }
+    }
+
+    private void saveNewProject(User save, String name) {
+        // required owner
+        final Project project = new Project();
+        project.setOwner(save);
+
+        // project.setna
+        project.setName(name);
+
+        projectsDao.save(project);
     }
 
 }

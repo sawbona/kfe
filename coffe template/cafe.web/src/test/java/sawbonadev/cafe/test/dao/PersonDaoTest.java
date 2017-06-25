@@ -70,8 +70,17 @@ public class PersonDaoTest {
     @Test
     public void testUserDao(){
         System.out.println("testUserDao");
+        saveUser("sawbona@gmail.com");
+        saveUser("abc@gmail.com");
+        Iterable<User> findAll = userDao.findAll();
+        for (User user : findAll) {
+            System.out.println("user" + user);
+        }
+    }
+
+    private void saveUser(String email) {
         final User user = new User();
-        user.setEmail("sawbona@gmail.com");
+        user.setEmail(email);
         user.setPassword("abc");
         final PersonDetail person = new PersonDetail();
         person.setBirthday(new Date());

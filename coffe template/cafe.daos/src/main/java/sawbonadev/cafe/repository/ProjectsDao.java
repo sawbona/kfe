@@ -5,7 +5,8 @@
  */
 package sawbonadev.cafe.repository;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import sawbonadev.cafe.model.projects.Project;
 
@@ -15,5 +16,5 @@ import sawbonadev.cafe.model.projects.Project;
  */
 public interface ProjectsDao extends PagingAndSortingRepository<Project, Long> {
 
-    List<Project> findByOwnerEmail(String email);
+    Page<Project> findByOwnerEmail(String email, Pageable pageRequest);
 }

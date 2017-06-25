@@ -12,9 +12,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import sawbonadev.solo.strings.StringsEquals;
-import sawbonadev.solo.strings.StringsNotNull;
-import sawbonadev.solo.strings.StringsRequired;
-import sawbonadev.solo.strings.StringsSecurePassword;
+import sawbonadev.solo.strings.StringNotNull;
+import sawbonadev.solo.strings.StringRequired;
+import sawbonadev.solo.strings.StringSecurePassword;
 
 /**
  *
@@ -46,116 +46,122 @@ public class StringsUnitTest {
     //
     @Test
     public void stringEquals() {
-        StringsEquals stringsEquals = new StringsEquals("1", "1");
-        Assert.assertTrue(stringsEquals.isValid());
-
-        stringsEquals = new StringsEquals("2", "1");
-        Assert.assertFalse(stringsEquals.isValid());
-
-        stringsEquals = new StringsEquals("2", null);
-        Assert.assertFalse(stringsEquals.isValid());
-
-        stringsEquals = new StringsEquals(null, "1");
-        Assert.assertFalse(stringsEquals.isValid());
-
-        stringsEquals = new StringsEquals(null);
-        Assert.assertFalse(stringsEquals.isValid());
-
-        stringsEquals = new StringsEquals(null, null);
-        Assert.assertFalse(stringsEquals.isValid());
+        StringsEquals stringsEquals = new StringsEquals();
+        Assert.assertTrue(stringsEquals.isValid("1", "1"));
 
         stringsEquals = new StringsEquals();
-        Assert.assertTrue(stringsEquals.isValid());
+        Assert.assertFalse(stringsEquals.isValid("2", "1"));
+
+        stringsEquals = new StringsEquals();
+        Assert.assertFalse(stringsEquals.isValid("2", null));
+
+        stringsEquals = new StringsEquals();
+        Assert.assertFalse(stringsEquals.isValid(null, "1"));
+
+        stringsEquals = new StringsEquals();
+        Assert.assertFalse(stringsEquals.isValid(null));
+        Assert.assertFalse(stringsEquals.isValid((String) null));
+
+        stringsEquals = new StringsEquals();
+        Assert.assertFalse(stringsEquals.isValid(null, null));
+
+        stringsEquals = new StringsEquals();
+        Assert.assertFalse(stringsEquals.isValid());
     }
 
     @Test
     public void stringsNotNull() {
-        StringsNotNull stringsNotNull = new StringsNotNull(null);
-        Assert.assertTrue(stringsNotNull.isValid() == false);
+        StringNotNull stringsNotNull = new StringNotNull();
+        
+        // a null array is not valid
+        Assert.assertFalse(stringsNotNull.isValid(null));
+        
+        // a null string value is not valid
+        Assert.assertFalse(stringsNotNull.isValid((String) null));
 
-        stringsNotNull = new StringsNotNull();
-        Assert.assertTrue(stringsNotNull.isValid());
+        stringsNotNull = new StringNotNull();
+        Assert.assertFalse(stringsNotNull.isValid(null));
 
-        stringsNotNull = new StringsNotNull("");
-        Assert.assertTrue(stringsNotNull.isValid());
+        stringsNotNull = new StringNotNull();
+        Assert.assertTrue(stringsNotNull.isValid(""));
 
-        stringsNotNull = new StringsNotNull("", "asdasd");
-        Assert.assertTrue(stringsNotNull.isValid());
+        stringsNotNull = new StringNotNull();
+        Assert.assertTrue(stringsNotNull.isValid(""));
 
-        stringsNotNull = new StringsNotNull(null, "asdasd");
-        Assert.assertTrue(stringsNotNull.isValid() == false);
+        stringsNotNull = new StringNotNull();
+        Assert.assertTrue(stringsNotNull.isValid(null) == false);
 
-        stringsNotNull = new StringsNotNull("asd", null);
-        Assert.assertTrue(stringsNotNull.isValid() == false);
+        stringsNotNull = new StringNotNull();
+        Assert.assertTrue(stringsNotNull.isValid("asd"));
     }
     
     @Test
     public void stringsRequired() {
-        StringsRequired required = new StringsRequired();
-        Assert.assertTrue(required.isValid());
+        StringRequired required = new StringRequired();
+        Assert.assertFalse(required.isValid(null));
         
-        required = new StringsRequired("");
-        Assert.assertTrue(required.isValid() == false);
+        required = new StringRequired();
+        Assert.assertTrue(required.isValid("") == false);
         
-        required = new StringsRequired("   ");
-        Assert.assertTrue(required.isValid() == false);
+        required = new StringRequired();
+        Assert.assertTrue(required.isValid("   ") == false);
         
     }
     
     @Test
     public void stringSecurePassword(){
-        StringsSecurePassword val = new StringsSecurePassword();
-        Assert.assertTrue(val.isValid() == true);
+        StringSecurePassword val = new StringSecurePassword();
+        Assert.assertFalse(val.isValid(null));
         
-        val = new StringsSecurePassword(null, "");
-        Assert.assertTrue(val.isValid() == false);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid(null) == false);
         
-        val = new StringsSecurePassword(null, null);
-        Assert.assertTrue(val.isValid() == false);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid(null) == false);
         
-        val = new StringsSecurePassword("", null);
-        Assert.assertTrue(val.isValid() == false);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid("") == false);
         
-        val = new StringsSecurePassword("aaa", "BBBB");
-        Assert.assertTrue(val.isValid() == false);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid("aaa") == false);
         
-        val = new StringsSecurePassword("BBB");
-        Assert.assertTrue(val.isValid() == false);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid("BBB") == false);
         
-        val = new StringsSecurePassword("1111222233344455");
-        Assert.assertTrue(val.isValid() == false);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid("1111222233344455") == false);
         
-        val = new StringsSecurePassword("   ");
-        Assert.assertTrue(val.isValid() == false);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid("   ") == false);
         
-        val = new StringsSecurePassword("   ", "aaaaa", "BBB", null);
-        Assert.assertTrue(val.isValid() == false);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid("   ") == false);
         
-        val = new StringsSecurePassword("   aaaaBBBBBB");
-        Assert.assertTrue(val.isValid() == false);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid("   aaaaBBBBBB") == false);
         
-        val = new StringsSecurePassword("   aB#      ");
-        Assert.assertTrue(val.isValid() == false);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid("   aB#      ") == false);
         
-        val = new StringsSecurePassword("   aB#      ", null);
-        Assert.assertTrue(val.isValid() == false);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid("   aB#      ") == false);
         
-        val = new StringsSecurePassword("   aB#      ", null);
-        Assert.assertTrue(val.isValid() == false);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid("   aB#      ") == false);
         
-        val = new StringsSecurePassword("111111aB#");
-        Assert.assertTrue(val.isValid() == true);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid("111111aB#") == true);
         
-        val = new StringsSecurePassword("111111aB#", null);
-        Assert.assertTrue(val.isValid() == false);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid("111111aB#"));
         
-        val = new StringsSecurePassword(null, "111111aB#", null);
-        Assert.assertTrue(val.isValid() == false);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid(null) == false);
         
-        val = new StringsSecurePassword("12345678aB%", "111111aB#", "ASD12345678aB%");
-        Assert.assertTrue(val.isValid() == true);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid("12345678aB%") == true);
         
-        val = new StringsSecurePassword("El Universo!", "111111aB#", "ASD12345678aB%");
-        Assert.assertTrue(val.isValid() == true);
+        val = new StringSecurePassword();
+        Assert.assertTrue(val.isValid("El Universo!") == true);
     }
 }

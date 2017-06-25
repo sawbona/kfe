@@ -36,8 +36,8 @@ public class GenericResponse<T> {
         return validations;
     }
 
-    public void add(String propertyName, String message, Validator validator) {
-        if (!validator.isValid()) {
+    public <K> void add(String propertyName, String message, Validator<K> validator, K value) {
+        if (!validator.isValid(value)) {
             addValidationMessageForProperty(propertyName, message);
         }
     }

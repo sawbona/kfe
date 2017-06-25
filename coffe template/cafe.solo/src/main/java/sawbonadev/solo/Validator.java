@@ -8,7 +8,14 @@ package sawbonadev.solo;
 /**
  *
  * @author clobaco
+ * @param <T>
  */
-public interface Validator {
-    boolean isValid();
+public interface Validator<T> {
+
+    /**
+     *
+     * @param object
+     * @return
+     */
+    boolean isValid(T object);
 }

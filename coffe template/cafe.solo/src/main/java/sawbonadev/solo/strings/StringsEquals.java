@@ -5,19 +5,19 @@
  */
 package sawbonadev.solo.strings;
 
+import sawbonadev.solo.Validator;
+
 /**
  *
  * @author sawbona
  */
-public class StringsEquals extends BaseStringsValidation {
-
-    public StringsEquals(String... strings) {
-        super(strings);
-    }
+public class StringsEquals implements Validator<String[]> {
 
     @Override
-    public boolean isValidImpl() {
-
+    public boolean isValid(String... strings) {
+        if(strings == null || strings.length == 0){
+            return false;
+        }
         String first = strings[0];
         if (first == null) {
             return false;

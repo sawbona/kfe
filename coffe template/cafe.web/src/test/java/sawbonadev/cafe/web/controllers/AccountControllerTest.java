@@ -119,7 +119,8 @@ public class AccountControllerTest {
         Page<UserDto> list = usersLogic.list(0, 10).getPayload();
         
         System.out.println("list.getNumberOfElements() = " + list.getNumberOfElements());
-        assertTrue(list.getNumberOfElements() > 0);
+        final int numberOfElements = list.getNumberOfElements();
+        assertTrue(numberOfElements > 0);
         for (UserDto user : list) {
             System.out.println("" + user.getEmail());
         }
@@ -128,7 +129,7 @@ public class AccountControllerTest {
         list = usersLogic.list(0, 10).getPayload();
         
         System.out.println("list.getNumberOfElements() = " + list.getNumberOfElements());
-        assertTrue(list.getNumberOfElements() == 0);
+        assertEquals(list.getNumberOfElements(), numberOfElements - 1);
         
 //        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
