@@ -6,6 +6,7 @@
 package sawbonadev.cafe.web.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,6 +22,12 @@ public class ProjectsController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView root(){
         ModelAndView modelAndView = new ModelAndView("/projects/mainProjects");
+        return modelAndView;
+    }
+    
+    @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
+    public ModelAndView activities(@PathVariable(name = "projectId") long projectId){
+        ModelAndView modelAndView = new ModelAndView("/projects/activities");
         return modelAndView;
     }
     

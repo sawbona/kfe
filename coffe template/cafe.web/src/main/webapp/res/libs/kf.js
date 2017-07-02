@@ -1,16 +1,53 @@
-define(["jquery"], function ($) {
-    
+define(["jquery", 'knockout'], function ($, ko) {
+
     function kf($) {
         var self = this;
-        
-        self.log = function(message, object){
-            if(object === undefined){
+
+        self.observeValidations = function (validations) {
+            return ko.computed(function () {
+                var containers = $(".kf-error-container");
+                containers.text(null);
+                for (var key in validations()) {
+                    var expression = '[data-kf-error-for="' + key + '"]';
+                    self.log("expression", expression);
+                    var keyErrorContainers = $(expression);
+                    self.log("length", {length: keyErrorContainers.length});
+                    var messages = validations()[key].join(", ");
+                    self.log("messages", {key:key, messages: messages});
+                    keyErrorContainers.text(messages);
+                }
+            });
+        };
+
+        self.getUrlParameter = function (name) {
+            var paramsString = window.location.split("?")[1];
+            var paramValues = paramsString.split("&");
+            var params = new Array();
+            for (var param in paramValues) {
+                var paramValue = param.split("=");
+                params[paramValue[0]] = paramValue[1];
+            }
+            return params[name];
+        };
+
+        self.getPathVariables = function (index) {
+            var path = window.location.pathname // /account/search
+            return index === undefined ? path.split("/") : path.split("/")[index];
+        };
+
+        self.getLastPathVariable = function () {
+            var variables = self.getPathVariables();
+            return variables[variables.length - 1];
+        };
+
+        self.log = function (message, object) {
+            if (object === undefined) {
                 object = message;
                 message = "log";
             }
             console.log(message + " = " + JSON.stringify(object));
         };
-        
+
         self.processErrorMessages = function () {
             $(function () {
                 $(".kf-generic-validation-error").each(function () {
@@ -22,23 +59,23 @@ define(["jquery"], function ($) {
                 });
             });
         };
-        
-        
+
+
         self.processErrorMessages();
         $("#loading").hide();
-        
+
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
-        
-        $(document).ajaxError(function() {
+
+        $(document).ajaxError(function () {
             $(".log-container").show();
             $(".log-text").text("It is not possible to complete your request. Check your log file and try it again.");
         });
-        
-        $(document).ajaxSend(function(e, xhr, options) {
+
+        $(document).ajaxSend(function (e, xhr, options) {
             xhr.setRequestHeader(header, token);
         });
-        
+
         jQuery.each(["put", "delete"], function (i, method) {
             jQuery[ method ] = function (url, data, callback, type) {
                 if (jQuery.isFunction(data)) {
@@ -57,6 +94,6 @@ define(["jquery"], function ($) {
             };
         });
     }
-    
+
     return new kf($);
 });

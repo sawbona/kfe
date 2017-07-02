@@ -11,7 +11,7 @@ import sawbonadev.solo.Validator;
  *
  * @author sawbona
  */
-public final class ValidationsUtils {
+public final class ValidateUtils {
     
     public static final Validator STRINGS_REQUIRED = new StringRequired();
     public static final Validator VALID_EMAIL = new StringValidEmail();

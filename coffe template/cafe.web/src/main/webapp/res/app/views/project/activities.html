@@ -1,0 +1,42 @@
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add New Activity</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label">Name *</label>
+                    <input class="form-control" data-bind="value: newActivity.name">
+                    <span class="control-label kf-error-container has-error"
+                          data-kf-error-for="activity.name"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Description</label>
+                    <input class="form-control" data-bind="value: newActivity.description">
+                    <span class="control-label kf-error-container has-error"
+                          data-kf-error-for="activity.description"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-loading-text="Loading..." data-bind="click: createActivity">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<h2 data-bind="text: projectName"></h2>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    New Activity
+</button>
+<div>
+    <table id="table" summary="Activity List" aria-label="Activities Table"
+           data-bind="ojComponent: {component: 'ojTable', 
+           data: datasource, 
+           columnsDefault: {sortable: 'none'},
+           rootAttributes:{style:'width:100%'},
+           columns: [{headerText: 'Activity',field: 'name'}]}">
+    </table>
+</div>

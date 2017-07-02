@@ -12,36 +12,18 @@ define(['ojs/ojcore', 'knockout',
         self.projects = ko.observableArray();
         self.validations = ko.observable();
         
-        
-        self.displayNameValidations = ko.pureComputed(function () {
-            for (var key in self.validations()) {
-                console.log("key = " + key);
-                if (key === 'name') {
-                    return true;
-                }
+        self.validationsObserver = ko.computed(function(){
+            var containers = $(".kf-error-container");
+            containers.text(null);
+            for(var key in self.validations()){
+                var keyErrorContainers = containers.find("[data-kf-error-for='" + key + "']");
+                var messages = self.validations()[key].join(", ");
+                kf.log("messages", {m: messages});
+                keyErrorContainers.text(messages);
             }
-            return false;
         });
-
-        self.nameValidations = ko.pureComputed(function () {
-            var messages = "";
-            for (var key in self.validations()) {
-                if (key === 'name') {
-                    var ms = self.validations()[key];
-                    messages = ms.join(", ");
-                }
-            }
-            return messages;
-        });
-
 
         // methods
-
-        projectsFacade.getProjects().then(function (result) {
-            kf.log("result", result);
-            self.projects(result.payload.content);
-        });
-
         self.createProject = function (data, event) {
             var button = $(event.target);
             button.button("loading");
@@ -67,6 +49,12 @@ define(['ojs/ojcore', 'knockout',
         self.showAddProjectModal = function () {
 
         };
+
+        projectsFacade.getProjects().then(function (result) {
+            kf.log("result", result);
+            self.projects(result.payload.content);
+        });
+
 
     }
     return new ProjectsViewModel;

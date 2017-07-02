@@ -9,16 +9,12 @@
                 <h4 class="modal-title" id="myModalLabel">Add New Project</h4>
             </div>
             <div class="modal-body">
-                <div class="form-group" data-bind="css:{'has-error': displayNameValidations}">
+                <div class="form-group">
                     <label class="control-label">Project Name *</label>   
                     <input id="project-name" class="form-control" value=""
                            data-bind="value: newProjectName">
-                    <label class="control-label" 
-                           for="project-name"
-                           data-bind="
-                            visible: displayNameValidations, 
-                            text: nameValidations"></label>
-
+                    <label class="control-label kf-error-container has-error"
+                           data-kf-error-for="project.name" for="project-name"></label>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Description</label>
@@ -35,7 +31,7 @@
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-    Add New Project
+    New Project
 </button>
 <table class="table table-hover">
     <thead>

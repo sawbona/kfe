@@ -17,7 +17,7 @@ import sawbonadev.cafe.web.api.converters.UserDtoConverter;
 import sawbonadev.cafe.web.api.users.model.UserDto;
 import sawbonadev.solo.GenericResponse;
 import sawbonadev.cafe.web.views.CreateAccountView;
-import sawbonadev.solo.strings.ValidationsUtils;
+import sawbonadev.solo.strings.ValidateUtils;
 
 /**
  *
@@ -33,22 +33,22 @@ public class UsersLogic {
 
     public GenericResponse<CreateAccountView> validate(final CreateAccountView view) {
         GenericResponse<CreateAccountView> validations = new GenericResponse<>(view);
-        validations.add("email", "Email is required.", ValidationsUtils.STRINGS_REQUIRED, view.getEmail());
+        validations.add("email", "Email is required.", ValidateUtils.STRINGS_REQUIRED, view.getEmail());
 
         // if email is present validate for email already registered.
         if (validations.isValid()) {
             User finded = usersDao.findByEmail(view.getEmail());
             if (finded != null) {
                 validations.addValidationMessageForProperty("duplicatedEmail",
-                        "Email is alredy registered.");
+                        "Email is already registered.");
             }
         }
         validations.add("email", "Enter a valid email.",
-                ValidationsUtils.VALID_EMAIL, view.getEmail());
+                ValidateUtils.VALID_EMAIL, view.getEmail());
         validations.add("password", "Password is required.",
-                ValidationsUtils.STRINGS_REQUIRED, view.getPassword());
+                ValidateUtils.STRINGS_REQUIRED, view.getPassword());
         validations.add("passwordConfirm", "Password confirmation is required.",
-                ValidationsUtils.VALID_EMAIL, view.getPasswordConfirm());
+                ValidateUtils.VALID_EMAIL, view.getPasswordConfirm());
 
         // validate password and confirmation.
 //        if (new StringsRequired(vista.getPassword(), vista.getPasswordConfirm()).isValid()) {

@@ -5,6 +5,9 @@
  */
 package sawbonadev.cafe.web.api.projects.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author sawbona
@@ -14,6 +17,16 @@ public class ProjectDto {
     private long id;
     
     private String name;
+    
+    private List<ActivityDto> activities = new ArrayList<>();
+
+    public List<ActivityDto> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<ActivityDto> activities) {
+        this.activities = activities;
+    }
 
     public long getId() {
         return id;

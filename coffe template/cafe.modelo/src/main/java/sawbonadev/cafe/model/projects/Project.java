@@ -6,14 +6,19 @@
 package sawbonadev.cafe.model.projects;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import sawbonadev.cafe.model.person.User;
+import sawbonadev.cafe.model.utils.Lengths;
 
 /**
  *
@@ -28,8 +33,19 @@ public class Project implements Serializable {
     @Column(name = "projectId")
     private long projectId;
 
-    @Column(name = "name", length = 100, nullable = false)
+    @Column(name = "name", length = Lengths.SMALL, nullable = false)
     private String name;
+    
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+    private List<Activity> activities = new ArrayList<>();
+
+    public List<Activity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
+    }
 
     @ManyToOne(optional = false)
     private User owner;
