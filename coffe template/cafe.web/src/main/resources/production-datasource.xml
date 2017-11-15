@@ -28,9 +28,9 @@
     <!--using mysql db-->
     <bean class="org.apache.commons.dbcp2.BasicDataSource" id="cafeDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/kfe-dev01?serverTimezone=UTC" />
-        <property name="username" value="kfeuser" />
-        <property name="password" value="kfeuser" />
+        <property name="url" value="jdbc:mysql://den01bsh.us.oracle.com:3306/cp_credentials_store?zeroDateTimeBehavior=convertToNull" />
+        <property name="username" value="cp_credentials_store_dev01" />
+        <property name="password" value="W3lcome1!" />
     </bean>
     <jpa:repositories base-package="sawbonadev.cafe.repository"/>
     

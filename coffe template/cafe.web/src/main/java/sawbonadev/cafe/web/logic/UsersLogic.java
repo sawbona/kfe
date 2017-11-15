@@ -48,7 +48,7 @@ public class UsersLogic {
         validations.add("password", "Password is required.",
                 ValidateUtils.STRINGS_REQUIRED, view.getPassword());
         validations.add("passwordConfirm", "Password confirmation is required.",
-                ValidateUtils.VALID_EMAIL, view.getPasswordConfirm());
+                ValidateUtils.STRINGS_REQUIRED, view.getPasswordConfirm());
 
         // validate password and confirmation.
 //        if (new StringsRequired(vista.getPassword(), vista.getPasswordConfirm()).isValid()) {
