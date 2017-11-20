@@ -49,7 +49,7 @@ public class GenericResponse<T> {
 
     private List<String> getValidationsMessageForProperty(String propertyName) {
         if (!validations.containsKey(propertyName)) {
-            validations.put(propertyName, new ArrayList<>());
+            validations.put(propertyName, new ArrayList<String>());
         }
         List<String> messages = validations.get(propertyName);
         return messages;
