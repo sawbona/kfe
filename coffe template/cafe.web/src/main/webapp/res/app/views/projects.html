@@ -12,7 +12,7 @@
                 <div class="form-group">
                     <label class="control-label">Project Name *</label>   
                     <input id="project-name" class="form-control" value=""
-                           data-bind="value: newProjectName">
+                           data-bind="value: newProjectName()">
                     <label class="control-label kf-error-container has-error"
                            data-kf-error-for="project.name" for="project-name"></label>
                 </div>
@@ -47,7 +47,7 @@
     <tbody data-bind="foreach: projects">
         <tr >
             <td>
-                <a data-bind="text: name, attr:{href:id}"></a>
+                <a data-bind="text: name, attr:{href: 'project/activities?p=' + id}"></a>
             </td>
             <td>
 

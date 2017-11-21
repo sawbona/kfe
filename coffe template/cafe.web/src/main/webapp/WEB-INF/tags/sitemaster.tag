@@ -44,7 +44,7 @@
                     <ul class="nav nav-tabs">
                         <li id="nav-menu-login"><a href="${contextPath}/account/login">Login</a></li>
                         <li id="nav-menu-users"><a href="${contextPath}/users/admin">Users</a></li>
-                        <li id="nav-menu-users"><a href="${contextPath}/projects/">Projects</a></li>
+                        <li id="nav-menu-users"><a href="${contextPath}/app/projects">Projects</a></li>
                         <li><a href="${contextPath}/activities/index">Activities</a></li>
                     </ul>
                 </div>

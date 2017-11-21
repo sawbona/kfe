@@ -7,7 +7,6 @@ define(["jquery",
     "app/context/utils",
     "kf",
     "promise"], function ($, utils, kf) {
-    console.log("utils = " + utils);
     
     function ProjectsFacade(){
         var self = this;

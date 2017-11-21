@@ -42,7 +42,7 @@ define(['ojs/ojcore', 'knockout',
             });
         };
         
-        projectsFacade.getProjectDetails(kf.getLastPathVariable()).
+        projectsFacade.getProjectDetails(kf.getUrlParameter("p")).
                 then(function(result){
                     kf.log("result", result);
                     self.project(result.payload);

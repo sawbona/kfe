@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-define(['ojs/ojcore', 'knockout'], function (oj, ko, $) {
+define(['ojs/ojcore', 'knockout', "kf"], function (oj, ko, $, kf) {
 
     var router = oj.Router.rootInstance;
     console.log("router.retrieve() = " + JSON.stringify(router.retrieve()));

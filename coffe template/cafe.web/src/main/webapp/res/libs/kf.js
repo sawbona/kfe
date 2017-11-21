@@ -13,21 +13,22 @@ define(["jquery", 'knockout'], function ($, ko) {
                     var keyErrorContainers = $(expression);
                     self.log("length", {length: keyErrorContainers.length});
                     var messages = validations()[key].join(", ");
-                    self.log("messages", {key:key, messages: messages});
+                    self.log("messages", {key: key, messages: messages});
                     keyErrorContainers.text(messages);
                 }
             });
         };
 
         self.getUrlParameter = function (name) {
-            var paramsString = window.location.split("?")[1];
-            var paramValues = paramsString.split("&");
-            var params = new Array();
-            for (var param in paramValues) {
-                var paramValue = param.split("=");
-                params[paramValue[0]] = paramValue[1];
-            }
-            return params[name];
+            var url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+            if (!results)
+                return null;
+            if (!results[2])
+                return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
         };
 
         self.getPathVariables = function (index) {
@@ -45,7 +46,7 @@ define(["jquery", 'knockout'], function ($, ko) {
                 object = message;
                 message = "log";
             }
-            console.log(message + " = " + JSON.stringify(object));
+            //console.log(message + " = " + JSON.stringify(object));
         };
 
         self.processErrorMessages = function () {
