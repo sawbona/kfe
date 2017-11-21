@@ -74,6 +74,7 @@ public class ProjectsLogic {
             newActivity.getStatus().setIdActivityStatus(Constants.ACTIVITY_STATUS.NEW.getId());
             newActivity.setCreatedBy(findByEmail);
             newActivity.setDescription(activityDto.getDescription());
+            newActivity.setOwner(activityDto.getOwner());
             Activity save = activitiesDao.save(newActivity);
             activityDto.setId(save.getActivityId());
         }

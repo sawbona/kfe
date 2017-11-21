@@ -9,13 +9,19 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label class="control-label">Name *</label>
-                    <input class="form-control" data-bind="value: newActivity.name">
+                    <input class="form-control" data-bind="value: newActivity.name" maxlength="100">
                     <span class="control-label kf-error-container has-error"
                           data-kf-error-for="activity.name"></span>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <input class="form-control" data-bind="value: newActivity.description">
+                    <input class="form-control" data-bind="value: newActivity.description" maxlength="300">
+                    <span class="control-label kf-error-container has-error"
+                          data-kf-error-for="activity.description"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Owner</label>
+                    <input class="form-control" data-bind="value: newActivity.owner" maxlength="100">
                     <span class="control-label kf-error-container has-error"
                           data-kf-error-for="activity.description"></span>
                 </div>
@@ -37,6 +43,6 @@
            data: datasource, 
            columnsDefault: {sortable: 'none'},
            rootAttributes:{style:'width:100%'},
-           columns: [{headerText: 'Activity',field: 'name'}]}">
+           columns: [{headerText: 'Activity',field: 'name'},{headerText: 'Owner',field: 'owner'}]}">
     </table>
 </div>

@@ -33,6 +33,7 @@ public class ProjectDtoConverter implements Converter<Project, ProjectDto>{
             activityDto.setId(activity.getActivityId());
             activityDto.setName(activity.getName());
             activityDto.setDescription(activity.getDescription());
+            activityDto.setOwner(activity.getOwner());
             final ActivityStatus status = activity.getStatus();
             activityDto.getStatus().setStatusId(status.getIdActivityStatus());
             

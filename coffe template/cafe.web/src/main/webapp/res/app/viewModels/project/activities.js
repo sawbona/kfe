@@ -6,7 +6,8 @@ define(['ojs/ojcore', 'knockout',
         self.project = ko.observable({});
         self.newActivity = {
             name: ko.observable(),
-            description: ko.observable()
+            description: ko.observable(),
+            owner: ko.observable()
         };
         self.projectName = ko.pureComputed(function(){
             return self.project().name;
@@ -26,7 +27,8 @@ define(['ojs/ojcore', 'knockout',
             var activityDto = {
                 projectId: self.project().id,
                 name: self.newActivity.name(),
-                description: self.newActivity.description()
+                description: self.newActivity.description(),
+                owner: self.newActivity.owner()
             };
             kf.log("activityDto", activityDto);
             projectsFacade.createActivity(activityDto).then(function(result){
