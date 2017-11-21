@@ -1,8 +1,6 @@
 define(['ojs/ojcore', 'knockout',
     'jquery', 'app/facade/projectsFacade', "kf"], function (oj, ko, $, projectsFacade, kf) {
 
-    console.log("projectsFacade = " + projectsFacade);
-
     function ProjectsViewModel() {
         var self = this;
 
