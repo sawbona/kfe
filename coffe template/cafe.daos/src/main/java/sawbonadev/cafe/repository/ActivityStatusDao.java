@@ -14,4 +14,6 @@ import sawbonadev.cafe.model.projects.ActivityStatus;
  */
 public interface ActivityStatusDao extends CrudRepository<ActivityStatus, Long>{
     
+    
+    
 }

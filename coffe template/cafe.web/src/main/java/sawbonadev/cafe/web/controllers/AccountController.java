@@ -6,10 +6,14 @@
 package sawbonadev.cafe.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import sawbonadev.cafe.model.installation.InstallationProperty;
+import sawbonadev.cafe.repository.InstallationPropertiesDao;
 import sawbonadev.cafe.web.logic.UsersLogic;
 import sawbonadev.solo.GenericResponse;
 import sawbonadev.cafe.web.views.CreateAccountView;
@@ -24,7 +28,7 @@ public class AccountController {
 
     @Autowired
     private UsersLogic usuariosNegocio;
-
+    
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public ModelAndView create() {
         ModelAndView mv = new ModelAndView("/account/create");

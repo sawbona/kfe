@@ -30,32 +30,37 @@
 </div>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
     New Project
 </button>
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th class="col-md-10">
-                Project Name
-            </th>
-            <th>
-                Actions
-            </th>
-        </tr>
-    </thead>
-    <tbody data-bind="foreach: projects">
-        <tr >
-            <td>
-                <a data-bind="text: name, attr:{href: 'project/activities?p=' + id}"></a>
-            </td>
-            <td>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="col-md-10">
+                        Project Name
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: projects">
+                <tr >
+                    <td>
+                        <a data-bind="text: name, attr:{href: 'project/activities?p=' + id}"></a>
+                    </td>
+                    <td>
 
-                <button data-bind=""
-                        class="btn btn-sm">
-                    <span class="glyphicon glyphicon-menu-hamburger"></span>
-                </button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                        <button data-bind=""
+                                class="btn btn-sm">
+                            <span class="glyphicon glyphicon-menu-hamburger"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

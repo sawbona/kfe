@@ -33,16 +33,18 @@
         </div>
     </div>
 </div>
-<h2 data-bind="text: projectName"></h2>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
     New Activity
 </button>
-<div>
-    <table id="table" summary="Activity List" aria-label="Activities Table"
-           data-bind="ojComponent: {component: 'ojTable', 
-           data: datasource, 
-           columnsDefault: {sortable: 'none'},
-           rootAttributes:{style:'width:100%'},
-           columns: [{headerText: 'Activity',field: 'name'},{headerText: 'Owner',field: 'owner'}]}">
-    </table>
+<h2 data-bind="text: projectName"></h2>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <table id="table" summary="Activity List" aria-label="Activities Table"
+               data-bind="ojComponent: {component: 'ojTable', 
+               data: datasource, 
+               columnsDefault: {sortable: 'enabled'},
+               rootAttributes:{style:'width:100%'},
+               columns: [{headerText: 'Activity',field: 'name'},{headerText: 'Owner',field: 'owner'}]}">
+        </table>
+    </div>
 </div>
