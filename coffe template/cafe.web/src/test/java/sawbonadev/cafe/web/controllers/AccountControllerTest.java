@@ -7,6 +7,7 @@ package sawbonadev.cafe.web.controllers;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,9 +18,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.servlet.ModelAndView;
+import sawbonadev.cafe.model.projects.Project;
+import sawbonadev.cafe.web.api.projects.model.ActivityDto;
 import sawbonadev.cafe.web.logic.UsersLogic;
 import sawbonadev.cafe.web.api.users.model.UserDto;
+import sawbonadev.cafe.web.logic.ProjectsLogic;
 import sawbonadev.cafe.web.views.CreateAccountView;
+import sawbonadev.solo.GenericResponse;
 
 /**
  *
@@ -98,7 +103,6 @@ public class AccountControllerTest {
     
     @Autowired
     private UsersLogic usersLogic;
-    
     
     
     /**

@@ -6,6 +6,7 @@
 package sawbonadev.cafe.web.logic;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -80,6 +81,12 @@ public class ProjectsLogic {
         }
         return response;
     }
+    
+    public GenericResponse<Long> deleteActivity(UserDto user, long id) {
+        long deleteOne = activitiesDao.deleteByIdAndUser(id, user.getEmail());
+        GenericResponse<Long> response = new GenericResponse<>(deleteOne);
+        return response;
+    }
 
     public GenericResponse<ProjectDto> getProjectDetails(long projectId, UserDto principalToUserDto) {
         System.out.println("projectId = " + projectId);
@@ -87,5 +94,20 @@ public class ProjectsLogic {
         GenericResponse<ProjectDto> response = new GenericResponse<>(projectDtoConverter.convertDetails(projectResult));
         return response;
     }
+    
+    private static final ActivityConverter ACTIVITY_CONVERTER = new ActivityConverter();
 
+    private static class ActivityConverter implements Converter<Activity, ActivityDto>{
+
+        @Override
+        public ActivityDto convert(Activity s) {
+            ActivityDto activityDto = new ActivityDto();
+            activityDto.setDescription(s.getDescription());
+            activityDto.setId(s.getActivityId());
+            activityDto.setName(s.getName());
+            activityDto.setOwner(s.getOwner());
+            return activityDto;
+        }
+
+    }
 }

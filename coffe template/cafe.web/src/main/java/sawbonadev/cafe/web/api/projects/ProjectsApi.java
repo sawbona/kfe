@@ -61,5 +61,10 @@ public class ProjectsApi {
         return ResponseEntity.ok(createResult);
     }
     
+    @RequestMapping(value = "/activities/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity createActivity(@PathVariable(name = "id") long id, Principal principal){
+        GenericResponse<Long> createResult = projectsLogic.deleteActivity(principalToUserDto(principal), id);
+        return ResponseEntity.ok(createResult);
+    }
 
 }

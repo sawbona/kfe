@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 import sawbonadev.cafe.model.person.User;
 import sawbonadev.cafe.model.projects.ActivityStatus;
 import sawbonadev.cafe.model.projects.Project;
@@ -108,27 +109,48 @@ public class ProjectsDaoTest {
         System.out.println("result fetched = " + result);
     }
 
-    private Project createProject(String email) {
+    @Test
+    @Transactional // required transactional for delete update operations.
+    public void testDeleteActivity() {
+        System.out.println("\ntestCreateActivities");
+
+        String email = "deleteuser@b.com";
+        Project project = createProject(email);
+        final UserDto userDto = new UserDto();
+        userDto.setEmail(email);
+
+        final ActivityDto activityDto = new ActivityDto();
+        activityDto.setProjectId(project.getProjectId());
+        activityDto.setName("activity test");
+
+        GenericResponse<ActivityDto> result
+                = projectsLogic.createActivity(userDto, activityDto);
+        Assert.assertTrue(result.isValid());
+        
+        GenericResponse<Long> deleteActivity = projectsLogic.deleteActivity(userDto, result.getPayload().getId());
+        System.out.println("deleteActivity = " + deleteActivity.getPayload());
+    }
+
+
+    protected Project createProject(String email) {
         User save = createUser(email);
         return saveNewProject(save, "Kafé");
     }
 
-    private User createUser(String email) {
+    protected User createUser(String email) {
         final User owner = new User(email);
         owner.setPassword("xxx");
         User save = userDao.save(owner);
         return save;
     }
 
-    private Project saveNewProject(User save, String name) {
+    protected Project saveNewProject(User save, String name) {
         // required owner
         final Project project = new Project();
         project.setOwner(save);
-
         // project.setna
         project.setName(name);
-
         return projectsDao.save(project);
     }
-
+    
 }

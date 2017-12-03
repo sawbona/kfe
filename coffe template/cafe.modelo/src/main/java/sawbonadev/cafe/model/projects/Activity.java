@@ -6,6 +6,8 @@
 package sawbonadev.cafe.model.projects;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import sawbonadev.cafe.model.person.User;
 import sawbonadev.cafe.model.utils.Lengths;
 
@@ -45,6 +48,24 @@ public class Activity implements Serializable {
     
     @ManyToOne(optional = false)
     private User createdBy;
+    
+    @OneToMany(mappedBy = "parent")
+    private List<Activity> activities;
+    
+    @ManyToOne
+    private Activity parent;
+
+    public Activity() {
+        this.activities = new ArrayList<>();
+    }
+
+    public Activity getParent() {
+        return parent;
+    }
+
+    public void setParent(Activity parent) {
+        this.parent = parent;
+    }
     
     // getter and setters
 
@@ -102,6 +123,20 @@ public class Activity implements Serializable {
 
     public void setActivityId(long activityId) {
         this.activityId = activityId;
+    }
+
+    /**
+     * @return the activities
+     */
+    public List<Activity> getActivities() {
+        return activities;
+    }
+
+    /**
+     * @param activities the activities to set
+     */
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
     }
 
 }

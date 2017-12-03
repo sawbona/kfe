@@ -36,15 +36,52 @@
 <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
     New Activity
 </button>
-<h2 data-bind="text: projectName"></h2>
-<div class="panel panel-default">
-    <div class="panel-body">
-        <table id="table" summary="Activity List" aria-label="Activities Table"
-               data-bind="ojComponent: {component: 'ojTable', 
-               data: datasource, 
-               columnsDefault: {sortable: 'enabled'},
-               rootAttributes:{style:'width:100%'},
-               columns: [{headerText: 'Activity',field: 'name'},{headerText: 'Owner',field: 'owner'}]}">
-        </table>
+<h1 data-bind="text: projectName"></h1>
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel-heading">
+            <h3>backlog</h3>
+        </div>
+        <div class="panel">
+            <div class="panel-body">
+                <table id="table" summary="Activity List" aria-label="Activities Table"
+                       data-bind="ojComponent: {component: 'ojTable', 
+                       data: newActivitiesDatasource, 
+                       columnsDefault: {sortable: 'disabled'},
+                       columns: [{field: 'name'}]}">
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+
+        <div class="panel">
+            <div class="panel-heading">
+                <h3>in-progress</h3>
+            </div>
+            <div class="panel-body">
+                <table id="table-ip" summary="Activity List" aria-label="Activities Table"
+                       data-bind="ojComponent: {component: 'ojTable', 
+                       data: inProgressDatasource, 
+                       columnsDefault: {sortable: 'disabled'},
+                       columns: [{field: 'name'}]}">
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel-heading">
+            <h3>done</h3>
+        </div>
+        <div class="panel">
+            <div class="panel-body">
+                <table id="table-done" summary="Activity List" aria-label="Activities Table"
+                       data-bind="ojComponent: {component: 'ojTable', 
+                       data: doneDatasource, 
+                       columnsDefault: {sortable: 'disabled'},
+                       columns: [{field: 'name'}]}">
+                </table>
+            </div>
+        </div>
     </div>
 </div>
