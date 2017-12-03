@@ -1,4 +1,160 @@
+
+<div class="pull-right">
+    <div class="btn-group">
+        <button type="button" class="btn btn-default" data-toggle="modal">
+            <i class="fa fa-star"></i> Make it public
+        </button>
+    </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        New Activity
+    </button>
+</div>
+
+<h1 data-bind="text: projectName"></h1>
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>pending</h3>
+            </div>
+            <div data-bind="foreach: newActivities" class="panel-body">
+                <div class="panel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a style="cursor: pointer"
+                               data-bind="text:name,
+                               click:$module.showNewActivityModal">
+
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i class="fa fa-user-o" aria-hidden="true"
+                               data-bind="visible:owner != null"></i>
+                            <span data-bind="text: owner"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="">in-progress</h3>
+            </div>
+            <div data-bind="foreach: inProgressActivities" class="panel-body">
+                <div class="panel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a style="cursor: pointer"
+                               data-bind="text:name,
+                               click:$module.showInProgresActivityModal">
+
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i class="fa fa-user-o" aria-hidden="true"
+                               data-bind="visible:owner != null"></i>
+                            <span data-bind="text: owner"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="text-muted">completed</h3>
+            </div>
+            <div data-bind="foreach: doneActivities" class="panel-body text-muted">
+                <div class="panel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a style="cursor: pointer"
+                               class="text-muted"
+                               data-bind="text:name">
+
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i class="fa fa-user-o" aria-hidden="true"
+                               data-bind="visible:owner != null"></i>
+                            <span data-bind="text: owner"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="activity-display-view">
+    <div class="form-group">
+        <label class="control-label">Description</label>
+        <span class="form-control" data-bind="text: $data.description"/>
+        <span class="control-label kf-error-container has-error"
+              data-kf-error-for="activity.description"></span>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Owner</label>
+        <span class="form-control" data-bind="text: $data.owner"/>
+        <span class="control-label kf-error-container has-error"
+              data-kf-error-for="activity.description"></span>
+    </div>
+</script>
+
 <!-- Modal -->
+<div class="modal fade" id="newActivityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"
+                    data-bind="text: selectedActivityModal().name"></h4>
+            </div>
+            <div class="modal-body">
+                <div data-bind="template: { name: 'activity-display-view', data: selectedActivityModal() }"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-loading-text="Loading..."
+                        id="move-to-button"
+                        data-bind="click: moveToInprogress">Move to in progress</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="inProgressActivityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"
+                    data-bind="text: selectedActivityModal().name"></h4>
+            </div>
+            <div class="modal-body">
+                <div data-bind="template: { name: 'activity-display-view', data: selectedActivityModal() }"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-loading-text="Loading..."
+                        id="move-to-button"
+                        data-bind="click: moveToCompleted">Move to Completed</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -28,59 +184,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-loading-text="Loading..." data-bind="click: createActivity">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
-    New Activity
-</button>
-<h1 data-bind="text: projectName"></h1>
-<div class="row">
-    <div class="col-md-4">
-        <div class="panel-heading">
-            <h3>backlog</h3>
-        </div>
-        <div class="panel">
-            <div class="panel-body">
-                <table id="table" summary="Activity List" aria-label="Activities Table"
-                       data-bind="ojComponent: {component: 'ojTable', 
-                       data: newActivitiesDatasource, 
-                       columnsDefault: {sortable: 'disabled'},
-                       columns: [{field: 'name'}]}">
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-
-        <div class="panel">
-            <div class="panel-heading">
-                <h3>in-progress</h3>
-            </div>
-            <div class="panel-body">
-                <table id="table-ip" summary="Activity List" aria-label="Activities Table"
-                       data-bind="ojComponent: {component: 'ojTable', 
-                       data: inProgressDatasource, 
-                       columnsDefault: {sortable: 'disabled'},
-                       columns: [{field: 'name'}]}">
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="panel-heading">
-            <h3>done</h3>
-        </div>
-        <div class="panel">
-            <div class="panel-body">
-                <table id="table-done" summary="Activity List" aria-label="Activities Table"
-                       data-bind="ojComponent: {component: 'ojTable', 
-                       data: doneDatasource, 
-                       columnsDefault: {sortable: 'disabled'},
-                       columns: [{field: 'name'}]}">
-                </table>
+                <button type="button" class="btn btn-primary" data-loading-text="Loading..." data-bind="click: createActivity">Create new activity</button>
             </div>
         </div>
     </div>

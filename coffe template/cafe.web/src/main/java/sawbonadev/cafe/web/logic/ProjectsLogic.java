@@ -62,6 +62,29 @@ public class ProjectsLogic {
         return createProject;
     }
 
+    public GenericResponse<ActivityDto> updateActivity(UserDto user, ActivityDto activityDto) {
+        GenericResponse<ActivityDto> response = new GenericResponse<>(activityDto);
+        response.add("activity.name", "Name is required",
+                ValidateUtils.STRINGS_REQUIRED, activityDto.getName());
+        if (response.isValid()) {
+//            User findByEmail = usersDao.findByEmail(user.getEmail());
+//            Project project = projectsDao.findOne(activityDto.getProjectId());
+            Activity newActivity = activitiesDao.findOne(activityDto.getId());
+            if (newActivity.getCreatedBy().getEmail().compareTo(user.getEmail()) != 0) {
+                response.addValidationMessageForProperty("activity.createdBy", "Not the owner");
+            } else {
+                newActivity.setName(activityDto.getName());
+                newActivity.setStatus(Constants.ACTIVITY_STATUS.getStatusById(activityDto.getStatus().getStatusId()));
+//                newActivity.setCreatedBy(findByEmail);
+                newActivity.setDescription(activityDto.getDescription());
+                newActivity.setOwner(activityDto.getOwner());
+                Activity save = activitiesDao.save(newActivity);
+                activityDto.setId(save.getActivityId());
+            }
+        }
+        return response;
+    }
+
     public GenericResponse<ActivityDto> createActivity(UserDto user, ActivityDto activityDto) {
         GenericResponse<ActivityDto> response = new GenericResponse<>(activityDto);
         response.add("activity.name", "Name is required",
@@ -81,7 +104,7 @@ public class ProjectsLogic {
         }
         return response;
     }
-    
+
     public GenericResponse<Long> deleteActivity(UserDto user, long id) {
         long deleteOne = activitiesDao.deleteByIdAndUser(id, user.getEmail());
         GenericResponse<Long> response = new GenericResponse<>(deleteOne);
@@ -89,15 +112,12 @@ public class ProjectsLogic {
     }
 
     public GenericResponse<ProjectDto> getProjectDetails(long projectId, UserDto principalToUserDto) {
-        System.out.println("projectId = " + projectId);
         Project projectResult = projectsDao.findByProjectIdAndOwnerEmailFetch(projectId);
         GenericResponse<ProjectDto> response = new GenericResponse<>(projectDtoConverter.convertDetails(projectResult));
         return response;
     }
-    
-    private static final ActivityConverter ACTIVITY_CONVERTER = new ActivityConverter();
 
-    private static class ActivityConverter implements Converter<Activity, ActivityDto>{
+    private static class ActivityConverter implements Converter<Activity, ActivityDto> {
 
         @Override
         public ActivityDto convert(Activity s) {

@@ -88,6 +88,7 @@ define(["jquery", 'knockout'], function ($, ko) {
                 return jQuery.ajax({
                     url: url,
                     type: method,
+                    contentType: "application/json; charset=utf-8",
                     dataType: type,
                     data: data,
                     success: callback

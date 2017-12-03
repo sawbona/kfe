@@ -9,7 +9,6 @@
     <head>
         <meta charset="utf-8">
         <meta name="_csrf" content="${_csrf.token}"/>
-        <!-- default header name is X-CSRF-TOKEN -->
         <meta name="_csrf_header" content="${_csrf.headerName}"/>
         <title>Café</title>
         <script type="text/javascript">
@@ -21,6 +20,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="<c:url value='/res/libs/jet/css/libs/oj/v2.3.0/alta/oj-alta-min.css' />" rel="stylesheet">
         <link href="<c:url value='/res/libs/bs/css/bootstrap.min.css' />" rel="stylesheet">
+        <link href="<c:url value='/res/libs/fa/css/font-awesome.min.css' />" rel="stylesheet">
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -43,9 +43,8 @@
                     </div>
                     <ul class="nav nav-tabs">
                         <li id="nav-menu-users"><a href="${contextPath}/installation/check">Check installation</a></li>
-                        <li id="nav-menu-login"><a href="${contextPath}/account/login">Login</a></li>
-<!--                        <li id="nav-menu-users"><a href="${contextPath}/users/admin">Users</a></li>-->
-                        <li id="nav-menu-users"><a href="${contextPath}/app/projects">Projects</a></li>
+                        <li id="nav-menu-users"><a href="${contextPath}/app/projects">My Projects</a></li>
+                        <li id="nav-menu-users"><a href="${contextPath}/app/publicProjects">Public Projects</a></li>
                     </ul>
                 </div>
             </div>

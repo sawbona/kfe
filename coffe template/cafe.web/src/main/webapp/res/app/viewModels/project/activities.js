@@ -2,13 +2,11 @@ define(['ojs/ojcore', 'knockout',
     'jquery', 'app/facade/projectsFacade', "kf",
     'ojs/ojtable', 'ojs/ojarraytabledatasource'], function (oj, ko, $, projectsFacade, kf) {
 
-
     function findByStatusId(activities, statusId) {
         return $.grep(activities, function (activity) {
             return activity.status.statusId === statusId;
         });
     }
-
 
     function ActivitiesViewModel() {
         var self = this;
@@ -31,14 +29,11 @@ define(['ojs/ojcore', 'knockout',
         self.inProgressActivities = ko.observableArray([]);
         self.doneActivities = ko.observableArray([]);
 
-        self.activities.subscribe(function (changed) {
-            var activities = changed;
-            if (activities) {
-                self.newActivities(findByStatusId(activities, 1));
-                self.inProgressActivities(findByStatusId(activities, 2));
-                self.doneActivities(findByStatusId(activities, 3));
-            }
-
+        self.activities.subscribe(function (changes) {
+            var activities = self.activities();
+            self.newActivities(findByStatusId(activities, 1));
+            self.inProgressActivities(findByStatusId(activities, 2));
+            self.doneActivities(findByStatusId(activities, 3));
         });
 
         self.newActivitiesDatasource = new oj.ArrayTableDataSource(self.newActivities, {idAttribute: 'id'});
@@ -47,9 +42,59 @@ define(['ojs/ojcore', 'knockout',
 
         self.doneDatasource = new oj.ArrayTableDataSource(self.doneActivities, {idAttribute: 'id'});
 
-        // methods
+        self.selectedActivityModal = ko.observable({});
 
-        self.createActivity = function () {
+        // common functions.
+        function showActivityModal(modalId, activity){
+            $("#" + modalId).modal("show");
+            self.selectedActivityModal(activity);
+        }
+
+        self.showNewActivityModal = function (data, event) {
+            showActivityModal("newActivityModal", data);
+        };
+        
+        self.showInProgresActivityModal = function(data, event){
+            showActivityModal("inProgressActivityModal", data);
+        };
+        
+        self.moveToCompleted = function(data, event){
+            // loading...
+            var button = $(event.target);
+            button.button("loading");
+            var activity = self.selectedActivityModal();
+            activity.status.statusId = 3;
+            projectsFacade.updateActivity(activity).then(function (response) {
+
+                // reset loading...
+                $("#move-to-button").button("reset");
+                $("#inProgressActivityModal").modal("hide");
+                self.inProgressActivities.remove(function (item) {
+                    return item.id === response.payload.id;
+                });
+                self.doneActivities.push(activity);
+            });
+        };
+
+        self.moveToInprogress = function () {
+
+            // loading...
+            $("#move-to-button").button("loading");
+            var activity = self.selectedActivityModal();
+            activity.status.statusId = 2;
+            projectsFacade.updateActivity(activity).then(function (response) {
+
+                // reset loading...
+                $("#move-to-button").button("reset");
+                $("#newActivityModal").modal("hide");
+                self.newActivities.remove(function (item) {
+                    return item.id === response.payload.id;
+                });
+                self.inProgressActivities.push(activity);
+            });
+        };
+
+        self.createActivity = function (data, event) {
             var button = $(event.target);
             button.button("loading");
             kf.log("description", self.newActivity.description());
@@ -68,7 +113,10 @@ define(['ojs/ojcore', 'knockout',
                     $("#myModal").modal("hide");
                     self.newActivity.name(null);
                     self.newActivity.description(null);
-                    self.activities.push(result.payload);
+                    self.newActivity.owner(null);
+                    var activity = result.payload;
+
+                    self.newActivities.push(activity);
                 }
             });
         };
@@ -79,7 +127,6 @@ define(['ojs/ojcore', 'knockout',
                     self.project(result.payload);
                     self.activities(result.payload.activities);
                 });
-        ;
     }
     return new ActivitiesViewModel();
 });

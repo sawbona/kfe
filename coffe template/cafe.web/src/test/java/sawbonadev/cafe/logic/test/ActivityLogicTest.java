@@ -16,7 +16,6 @@ import sawbonadev.cafe.model.person.User;
 import sawbonadev.cafe.model.projects.Project;
 import sawbonadev.cafe.repository.ProjectsDao;
 import sawbonadev.cafe.repository.UserDao;
-import sawbonadev.cafe.test.dao.ProjectsDaoTest;
 import sawbonadev.cafe.web.api.projects.model.ActivityDto;
 import sawbonadev.cafe.web.api.users.model.UserDto;
 import sawbonadev.cafe.web.logic.ProjectsLogic;
@@ -60,21 +59,43 @@ public class ActivityLogicTest {
         
         projectsLogic.deleteActivity(userDto, result.getPayload().getId());
     }
+    
+    @Test
+    @Transactional
+    public void testUpdateActivity() {
+        System.out.println("\ntestCreateActivities");
+
+        String email = "deleteuser@b.com";
+        Project project = createProject(email);
+        final UserDto userDto = new UserDto();
+        userDto.setEmail(email);
+
+        final ActivityDto activityDto = new ActivityDto();
+        activityDto.setProjectId(project.getProjectId());
+        activityDto.setName("activity test");
+
+        GenericResponse<ActivityDto> result
+                = projectsLogic.createActivity(userDto, activityDto);
+        Assert.assertTrue(result.isValid());
+        ActivityDto payload = result.getPayload();
+        payload.getStatus().setStatusId(2);
+        projectsLogic.updateActivity(userDto, payload);
+    }
 
 
-    protected Project createProject(String email) {
+    private Project createProject(String email) {
         User save = createUser(email);
         return saveNewProject(save, "Kafé");
     }
 
-    protected User createUser(String email) {
+    private User createUser(String email) {
         final User owner = new User(email);
         owner.setPassword("xxx");
         User save = userDao.save(owner);
         return save;
     }
 
-    protected Project saveNewProject(User save, String name) {
+    private Project saveNewProject(User save, String name) {
         // required owner
         final Project project = new Project();
         project.setOwner(save);

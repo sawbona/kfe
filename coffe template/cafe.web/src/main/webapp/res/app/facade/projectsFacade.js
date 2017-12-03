@@ -43,6 +43,14 @@ define(["jquery",
                 });
             });
         };
+        
+        self.updateActivity = function(activity){
+            return new Promise(function(resolve, reject){
+                $.put(utils.contextPath + "/api/projects/activities/", JSON.stringify(activity), function(result){
+                    resolve(result);
+                });
+            });
+        };
     }
     
     return new ProjectsFacade();

@@ -9,7 +9,9 @@ import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,8 +63,15 @@ public class ProjectsApi {
         return ResponseEntity.ok(createResult);
     }
     
+    @RequestMapping(value = "/activities/", method = RequestMethod.PUT)
+    @Transactional
+    public ResponseEntity updateActivity(@RequestBody ActivityDto activity, Principal principal){
+        GenericResponse<ActivityDto> createResult = projectsLogic.updateActivity(principalToUserDto(principal), activity);
+        return ResponseEntity.ok(createResult);
+    }
+    
     @RequestMapping(value = "/activities/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity createActivity(@PathVariable(name = "id") long id, Principal principal){
+    public ResponseEntity deleteActivity(@PathVariable(name = "id") long id, Principal principal){
         GenericResponse<Long> createResult = projectsLogic.deleteActivity(principalToUserDto(principal), id);
         return ResponseEntity.ok(createResult);
     }
